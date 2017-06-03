@@ -1,69 +1,45 @@
-#ifndef MAGI_H_INCLUDED
-#define MAGI_H_INCLUDED
+#ifndef STUDENT_H_INCLUDED
+#define STUDENT_H_INCLUDED
 
 #include "Exceptions.h"
 
-namespace Magi_Defines
+namespace Student_Defines
 {
-    const int MIN_MAGI = 0;
-    const int MIN_LEVEL = 0;
+    const int MIN_ID = 0;
+    const int MIN_POWER = 0;
     const int INVALID_ID = -1;
 }
 
 using namespace my_exceptions;
 
-class Magi
+class Student
 {
 private:
-    const int Magi_Level;
-    const int Seniority;
-    int Creature_ID;
+    const int power;
+    int team_ID;
 
 public:
     const int ID;
-    Magi(int MagiLevel, int Seniority, int id) : Magi_Level(MagiLevel), Seniority(Seniority), Creature_ID(Magi_Defines::INVALID_ID), ID(id)
+    Student(int power, int team_ID, int id) : power(power), team_ID(team_ID), ID(id)
     {
-        if(id <= Magi_Defines::MIN_MAGI || MagiLevel <= Magi_Defines::MIN_LEVEL)
+        if(id <= Student_Defines::MIN_ID || power <= Student_Defines::MIN_POWER)
         {
             throw invalid();
         }
     }
 
-    ~Magi() {}
+    ~Student() {}
 
-    void addCreature(int creature_id)
+    int pwr()
     {
-        if(isAssined()) throw fail();
-        this->Creature_ID = creature_id;
+        return power;
     }
 
-    void release()
+    int team()
     {
-        if(!isAssined()) throw fail();
-        this->Creature_ID = Magi_Defines::INVALID_ID;
-    }
-
-    int level()
-    {
-        return Magi_Level;
-    }
-
-    int seniority()
-    {
-        return Seniority;
-    }
-
-    bool isAssined()
-    {
-        return (Creature_ID != Magi_Defines::INVALID_ID);
-    }
-
-    int creatureAssined()
-    {
-        if(!isAssined()) throw fail();
-        return Creature_ID;
+        return team_ID;
     }
 
 };
 
-#endif // MAGI_H_INCLUDED
+#endif // STUDENT_H_INCLUDED

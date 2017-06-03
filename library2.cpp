@@ -1,9 +1,9 @@
 #include "library2.h"
-#include "Magical_Creatures.h"
+#include "Xmen.h"
 
-void* Init(int n, int* levels)
+void* Init(int n)
 {
-    Magical_Creatures* DS = new Magical_Creatures(n, levels);
+    Xmen* DS = new Xmen(n);
     return (void*)DS;
 }
 
@@ -12,12 +12,12 @@ void assert_not_null(void* DS)
     if(!DS) throw my_exceptions::invalid();
 }
 
-StatusType AddMagizoologist(void *DS, int magiID, int magiLevel)
+StatusType AddStudent(void *DS, int StudentID, int Team ,int Power)
 {
     try
     {
         assert_not_null(DS);
-        ((Magical_Creatures*)DS)->AddMagizoologist(magiID, magiLevel);
+        ((Xmen*)DS)->AddStudent(StudentID, Team, Power);
     }
     catch(std::bad_alloc e)
     {
@@ -34,12 +34,12 @@ StatusType AddMagizoologist(void *DS, int magiID, int magiLevel)
     return SUCCESS;
 }
 
-StatusType RemoveMagizoologist(void *DS, int magiID)
+StatusType RemoveStudent(void *DS, int StudentID)
 {
     try
     {
         assert_not_null(DS);
-        ((Magical_Creatures*)DS)->RemoveMagizoologist(magiID);
+        ((Xmen*)DS)->RemoveStudent(StudentID);
     }
     catch(std::bad_alloc e)
     {
@@ -56,12 +56,12 @@ StatusType RemoveMagizoologist(void *DS, int magiID)
     return SUCCESS;
 }
 
-StatusType RemoveBarrier(void *DS, int creature1, int creature2)
+StatusType JoinTeams(void *DS, int Team1, int Team2)
 {
     try
     {
         assert_not_null(DS);
-        ((Magical_Creatures*)DS)->RemoveBarrier(creature1, creature2);
+        ((Xmen*)DS)->JoinTeams(Team1, Team2);
     }
     catch(std::bad_alloc e)
     {
@@ -78,12 +78,12 @@ StatusType RemoveBarrier(void *DS, int creature1, int creature2)
     return SUCCESS;
 }
 
-StatusType AssignMagizoologistToCreature(void *DS, int creatureID)
+StatusType TeamFight(void *DS, int Team1, int Team2, int NumOfFighters)
 {
     try
     {
         assert_not_null(DS);
-        ((Magical_Creatures*)DS)->AssignMagizoologistToCreature(creatureID);
+        ((Xmen*)DS)->TeamFight(Team1, Team2, NumOfFighters);
     }
     catch(std::bad_alloc e)
     {
@@ -100,12 +100,12 @@ StatusType AssignMagizoologistToCreature(void *DS, int creatureID)
     return SUCCESS;
 }
 
-StatusType ReleaseMagizoologist(void *DS, int magiID)
+StatusType GetNumOfWins(void *DS, int Team, int* Wins)
 {
     try
     {
         assert_not_null(DS);
-        ((Magical_Creatures*)DS)->ReleaseMagizoologist(magiID);
+        ((Xmen*)DS)->GetNumOfWins(Team, Wins);
     }
     catch(std::bad_alloc e)
     {
@@ -122,56 +122,12 @@ StatusType ReleaseMagizoologist(void *DS, int magiID)
     return SUCCESS;
 }
 
-StatusType GetCreatureOfMagi(void *DS, int magiID, int* creatureID)
+StatusType GetStudentTeamLeader(void *DS, int StudentID, int* Leader)
 {
     try
     {
         assert_not_null(DS);
-        ((Magical_Creatures*)DS)->GetCreatureOfMagi(magiID, creatureID);
-    }
-    catch(std::bad_alloc e)
-    {
-        return ALLOCATION_ERROR;
-    }
-    catch(my_exceptions::invalid e)
-    {
-        return INVALID_INPUT;
-    }
-    catch(my_exceptions::fail e)
-    {
-        return FAILURE;
-    }
-    return SUCCESS;
-}
-
-StatusType AreCreaturesInSameArea(void *DS, int creature1, int creature2,  bool* sameArea)
-{
-    try
-    {
-        assert_not_null(DS);
-        ((Magical_Creatures*)DS)->AreCreaturesInSameArea(creature1, creature2, sameArea);
-    }
-    catch(std::bad_alloc e)
-    {
-        return ALLOCATION_ERROR;
-    }
-    catch(my_exceptions::invalid e)
-    {
-        return INVALID_INPUT;
-    }
-    catch(my_exceptions::fail e)
-    {
-        return FAILURE;
-    }
-    return SUCCESS;
-}
-
-StatusType GetSizeOfArea(void *DS, int creatureID, int* sizeOfArea)
-{
-    try
-    {
-        assert_not_null(DS);
-        ((Magical_Creatures*)DS)->GetSizeOfArea(creatureID, sizeOfArea);
+        ((Xmen*)DS)->GetStudentTeamLeader(StudentID, Leader);
     }
     catch(std::bad_alloc e)
     {
@@ -199,7 +155,7 @@ void Quit(void** DS)
     {
         return;
     }
-    delete *(Magical_Creatures**)DS;
+    delete *(Xmen**)DS;
     *DS = NULL;
     return;
 }

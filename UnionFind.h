@@ -10,13 +10,12 @@ class UnionFind
 private:
 
     int uf_size;
-    int* levels;
     int* sets;
     int* sizes;
 
 public:
 
-    UnionFind(int N, int* levels);
+    UnionFind(int N);
 
     ~UnionFind();
 
@@ -29,10 +28,6 @@ public:
     void Union(int id1, int id2);
 
     bool areConnected(int id1, int id2);
-
-    int AreaSize(int id);
-
-    int AreaLevel(int id);
 
 };
 

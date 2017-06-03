@@ -4,44 +4,38 @@
 #include "avl_rank.h"
 #include "UnionFind.h"
 #include "hashTable.h"
-#include "Magi.h"
+#include "Student.h"
 #include "Exceptions.h"
 
 using namespace my_exceptions;
 
-class Magical_Creatures
+class Xmen
 {
 private:
 
-    static int Seniority;
+    UnionFind* teams;
 
-    UnionFind* creatures;
+    avl_rank* avl_students;
 
-    avl_rank* avl_magis;
-
-    HashTable<Magi>* ht_magis;
+    HashTable<Student>* ht_students;
 
 public:
 
-    Magical_Creatures(int number_of_creatures, int* levels);
+    Xmen(int number_of_teams);
 
-    ~Magical_Creatures();
+    ~Xmen();
 
-    void AddMagizoologist(int Magi_ID, int Magi_Level);
+    void AddStudent(int StudentID, int Team ,int Power);
 
-    void RemoveMagizoologist(int Magi_ID);
+    void RemoveStudent(int StudentID);
 
-    void RemoveBarrier(int Creature1, int Creature2);
+    void JoinTeams(int Team1, int Team2);
 
-    void AssignMagizoologistToCreature(int Creature);
+    void TeamFight(int Team1, int Team2, int NumOfFighters);
 
-    void ReleaseMagizoologist(int Magi_ID);
+    void GetNumOfWins(int Team, int* Wins);
 
-    void GetCreatureOfMagi(int Magi_ID, int* Creature);
-
-    void AreCreaturesInSameArea(int Creature1, int Creature2, bool* SameArea);
-
-    void GetSizeOfArea(int Creature, int* SizeOfArea);
+    void GetStudentTeamLeader(int StudentID, int* Leader);
 
 };
 

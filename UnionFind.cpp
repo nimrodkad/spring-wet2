@@ -1,22 +1,19 @@
 #include "UnionFind.h"
 
-UnionFind::UnionFind(int N, int* levels) : uf_size(N)
+UnionFind::UnionFind(int N) : uf_size(N)
 {
     if(N <= 0) throw fail();
-    this->levels = new int[N];
     this->sets = new int[N];
     this->sizes = new int[N];
     for(int i=0; i<N; i++)
     {
-        this->levels[i] = levels[i];
-        sets[i] = i;
+        sets[i] = i + 1;
         sizes[i] = 1;
     }
 }
 
 UnionFind::~UnionFind()
 {
-    delete[] levels;
     delete[] sets;
     delete[] sizes;
 }
@@ -28,7 +25,7 @@ int UnionFind::size()
 
 bool UnionFind::isInSet(int id)
 {
-    return (!(id < 0 || id >= size()));
+    return (!(id <= 0 || id >= size()));
 }
 
 int UnionFind::Find(int id)
@@ -55,13 +52,11 @@ void UnionFind::Union(int id1, int id2)
     {
         sets[x] = y;
         sizes[y] += sizes[x];
-        levels[y] += levels[x];
     }
     else
     {
         sets[y] = x;
         sizes[x] += sizes[y];
-        levels[x] += levels[y];
     }
 }
 
@@ -76,8 +71,3 @@ int UnionFind::AreaSize(int id)
     return sizes[x];
 }
 
-int UnionFind::AreaLevel(int id)
-{
-    int x = Find(id);
-    return levels[x];
-}
