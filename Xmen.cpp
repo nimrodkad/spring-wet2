@@ -6,80 +6,66 @@ typedef enum {
 	DOESNT_EXIST
 } Condition;
 
-Student* Validate_Magi(HashTable<Student>* ht, int Magi_ID, Condition cond);
+Student* Validate_Student(HashTable<Student>* ht, int Magi_ID, Condition cond);
 
-Xmen::Xmen(int number_of_creatures, int* levels) : creatures(new UnionFind(number_of_creatures, levels)),
-                                                                                                                avl_magis(new avl_rank()),
-                                                                                                                ht_magis(new HashTable<Student>()) {}
+Xmen::Xmen(int number_of_teams) :  teams(new UnionFind(int number_of_teams)),
+                                   avl_students(new avl_rank()), ht_students(new HashTable<Student>()){}
 
 Xmen::~Xmen()
 {
-    delete creatures;
-    delete avl_magis;
-    delete ht_magis;
+    delete teams;
+    delete avl_students;
+    delete ht_students;
 }
 
-void Xmen::AddMagizoologist(int Magi_ID, int Magi_Level)
+void AddStudent(int StudentID, int Team ,int Power)
 {
-    if(Magi_Level <= Magi_Defines::MIN_LEVEL) throw invalid();
-    Validate_Magi(ht_magis, Magi_ID, DOESNT_EXIST);
+    if(Power <= Student_Defines::MIN_POWER) throw invalid();
+    Validate_Student(ht_students, Magi_ID, DOESNT_EXIST);
     Student magi(Magi_Level, Seniority, Magi_ID);
-    avl_magis->insert(Magi_ID, Magi_Level, Seniority);
-    ht_magis->insert(Magi_ID, &magi);
+    avl_students->insert(Magi_ID, Magi_Level, Seniority);
+    ht_students->insert(Magi_ID, &magi);
     Seniority++;
 }
 
 void Xmen::RemoveMagizoologist(int Magi_ID)
 {
-    Student* magi = Validate_Magi(ht_magis, Magi_ID, EXISTS);
-    avl_magis->remove(Magi_ID, magi->level(), magi->seniority());
-    ht_magis->remove(Magi_ID);
+    Student* magi = Validate_Student(ht_students, Magi_ID, EXISTS);
+    avl_students->remove(Magi_ID, magi->level(), magi->seniority());
+    ht_students->remove(Magi_ID);
 }
 
 void Xmen::RemoveBarrier(int Creature1, int Creature2)
 {
-    creatures->Union(Creature1, Creature2);
+    teams->Union(Creature1, Creature2);
 }
 
 void Xmen::AssignMagizoologistToCreature(int Creature)
 {
-    int x = creatures->Find(Creature);
-    int lvl = creatures->AreaLevel(x);
-    int id = avl_magis->find_newest_suitable(lvl);
+    int x = teams->Find(Creature);
+    int lvl = teams->AreaLevel(x);
+    int id = avl_students->find_newest_suitable(lvl);
     if(id == Avl_Defines::INVALID_ID) throw fail();
-    Student* magi = ht_magis->find(id);
+    Student* magi = ht_students->find(id);
     magi->addCreature(Creature);
-    avl_magis->remove(magi->ID, magi->level(), magi->seniority());
+    avl_students->remove(magi->ID, magi->level(), magi->seniority());
 }
 
 void Xmen::ReleaseMagizoologist(int Magi_ID)
 {
-    Student* magi = Validate_Magi(ht_magis, Magi_ID, EXISTS);
+    Student* magi = Validate_Student(ht_students, Magi_ID, EXISTS);
     magi->release();
-    avl_magis->insert(Magi_ID, magi->level(), magi->seniority());
+    avl_students->insert(Magi_ID, magi->level(), magi->seniority());
 }
 
 void Xmen::GetCreatureOfMagi(int Magi_ID, int* Creature)
 {
     if(!Creature) throw invalid();
-    Student* magi = Validate_Magi(ht_magis, Magi_ID, EXISTS);
+    Student* magi = Validate_Student(ht_students, Magi_ID, EXISTS);
     *Creature = magi->creatureAssined();
 }
 
-void Xmen::AreCreaturesInSameArea(int Creature1, int Creature2, bool* SameArea)
-{
-    if(!SameArea) throw invalid();
-    *SameArea = creatures->areConnected(Creature1, Creature2);
-}
-
-void Xmen::GetSizeOfArea(int Creature, int* SizeOfArea)
-{
-    if(!SizeOfArea) throw invalid();
-    int x = creatures->Find(Creature);
-    *SizeOfArea = creatures->AreaSize(x);
-}
-
-Student* Validate_Magi(HashTable<Student>* ht, int Magi_ID, Condition cond)
+Student* Validate_Student(HashTable<Student>* ht, int Magi_ID, Condition cond)
 {
     if(Magi_ID <= Magi_Defines::MIN_MAGI) throw invalid();
     Student* magi = ht->find(Magi_ID);
