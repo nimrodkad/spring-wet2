@@ -9,8 +9,6 @@ namespace Avl_Defines
     const int INVALID_RANK = -1;
 
     const int INVALID_ID = -1;
-
-    const int INVALID_LVL = -1;
 }
 
 using namespace Avl_Defines;
@@ -30,11 +28,11 @@ public:
 
     ~avl_rank();
 
-    bool insert(int id, int lvl, int rank);
+    bool insert(int id, int rank);
 
-    bool remove(const int id, const int lvl, const int rank);
+    bool remove(const int id, const int rank);
 
-    int find_newest_suitable(int lvl);
+    int get_strongest(int rank);
 
     bool doesExist(int id, int rank);
 
@@ -46,12 +44,9 @@ public:
         {
 
             int id;
-            int lvl;
             int rank;
 
-            Info(const int id, const int lvl, const int rank) : id(id), lvl(lvl), rank(rank) {}
-
-            Info(const int id, const int rank) : id(id), lvl(INVALID_LVL), rank(rank) {}
+            Info(const int id, const int rank) : id(id), rank(rank) {}
 
         };
 
@@ -61,11 +56,11 @@ public:
 
         Node *left, *right;
 
-        int lvl_left, lvl_right;
+        int rank_left, rank_right;
 
-        Node(int i, int l, int r) :
-            height(1), info(i, l, r), left(NULL), right(NULL),
-            lvl_left(INVALID_LVL), lvl_right(INVALID_LVL) {}
+        Node(int i, int r) :
+            height(1), info(i, r), left(NULL), right(NULL),
+            rank_left(INVALID_RANK), rank_right(INVALID_RANK) {}
 
         ~Node() {}
 
@@ -108,11 +103,11 @@ private:
 
     avl_rank::Node* remove(avl_rank::Node* node, avl_rank::Node::Info info, int* max);
 
-    int find_newest_suitable(avl_rank::Node* node, int lvl);
+    int get_strongest(avl_rank::Node* node, int rank);
 
     bool doesExist(avl_rank::Node* node, avl_rank::Node::Info info);
 
-    void setLevels(avl_rank::Node *node);
+    void setRanks(avl_rank::Node *node);
 };
 
 

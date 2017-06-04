@@ -3,12 +3,14 @@
 UnionFind::UnionFind(int N) : uf_size(N)
 {
     if(N <= 0) throw fail();
-    this->sets = new int[N];
-    this->sizes = new int[N];
-    for(int i=0; i<N; i++)
+    this->sets = new int[N+1];
+    this->sizes = new int[N+1];
+    this->wins = new int[N+1];
+    for(int i=0; i<N+1; i++)
     {
-        sets[i] = i + 1;
+        sets[i] = i;
         sizes[i] = 1;
+        wins[i] = 0;
     }
 }
 
@@ -16,6 +18,7 @@ UnionFind::~UnionFind()
 {
     delete[] sets;
     delete[] sizes;
+    delete[] wins;
 }
 
 int UnionFind::size()
@@ -25,7 +28,7 @@ int UnionFind::size()
 
 bool UnionFind::isInSet(int id)
 {
-    return (!(id <= 0 || id >= size()));
+    return (!(id <= 0 || id > size()));
 }
 
 int UnionFind::Find(int id)
@@ -52,11 +55,13 @@ void UnionFind::Union(int id1, int id2)
     {
         sets[x] = y;
         sizes[y] += sizes[x];
+        wins[y] += wins[x];
     }
     else
     {
         sets[y] = x;
         sizes[x] += sizes[y];
+        wins[x] += wins[y];
     }
 }
 
@@ -69,5 +74,15 @@ int UnionFind::AreaSize(int id)
 {
     int x = Find(id);
     return sizes[x];
+}
+
+int UnionFind::get_wins(int id)
+{
+    return wins[Find(id)];
+}
+
+void UnionFind::update_wins(int id)
+{
+    wins[Find(id)]++;
 }
 

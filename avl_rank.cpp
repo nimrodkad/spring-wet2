@@ -16,9 +16,9 @@ int Max(int x, int y, int z)
 Compare_Options Compare(avl_rank::Node::Info info1, avl_rank::Node::Info info2)
 {
     if(info1.id == info2.id) return EQUALS;
-    if(info1.rank < info2.rank) return SMALLER;
+    if(info1.id < info2.id) return SMALLER;
     if(info1.rank == info2.rank)
-        if(info1.id < info2.id)
+        if(info1.id > info2.id)
             return SMALLER;
     return BIGGER;
 }
@@ -65,9 +65,9 @@ avl_rank::Node* avl_rank::rotate_left(avl_rank::Node* node1)
     node2->left = node1;
     set_height(node1);
     set_height(node2);
-    node1->lvl_right = node2->lvl_left;
-    int l = node1->info.lvl, ll = node1->lvl_left, lr = node1->lvl_right;
-    node2->lvl_left = Max(l, ll, lr);
+    node1->rank_right = node2->rank_left;
+    int r = node1->info.rank, rl = node1->rank_left, rr = node1->rank_right;
+    node2->rank_left = Max(r, rl, rr);
     return node2;
 }
 
@@ -78,9 +78,9 @@ avl_rank::Node* avl_rank::rotate_right(avl_rank::Node* node1)
     node2->right = node1;
     set_height(node1);
     set_height(node2);
-    node1->lvl_left = node2->lvl_right;
-    int l = node1->info.lvl, ll = node1->lvl_left, lr = node1->lvl_right;
-    node2->lvl_right = Max(l, ll, lr);
+    node1->rank_left = node2->rank_right;
+    int r = node1->info.rank, rl = node1->rank_left, rr = node1->rank_right;
+    node2->rank_right = Max(r, rl, rr);
     return node2;
 }
 
@@ -107,7 +107,7 @@ bool avl_rank::insert(int id, int lvl, int rank)
     avl_rank::Node::Info info(id, lvl, rank);
     if(doesExist(root, info)) return false;
     root = insert(root, info);
-    setLevels(root);
+    setRanks(root);
     return true;
 }
 
@@ -254,7 +254,7 @@ bool avl_rank::doesExist(avl_rank::Node* node, avl_rank::Node::Info info)
     }
 }
 
-void avl_rank::setLevels(avl_rank::Node *node)
+void avl_rank::setRanks(avl_rank::Node *node)
 {
     if(!node)
         return;

@@ -12,6 +12,7 @@ private:
     int uf_size;
     int* sets;
     int* sizes;
+    int* wins;
 
 public:
 
@@ -28,6 +29,10 @@ public:
     void Union(int id1, int id2);
 
     bool areConnected(int id1, int id2);
+
+    int get_wins(int id);
+
+    void update_wins(int id);
 
 };
 

@@ -15,7 +15,7 @@ private:
 
     UnionFind* teams;
 
-    avl_rank* avl_students;
+    avl_rank** avl_students;
 
     HashTable<Student>* ht_students;
 

@@ -32,7 +32,18 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
-		<Unit filename="main.cpp" />
+		<Unit filename="Exceptions.h" />
+		<Unit filename="Student.h" />
+		<Unit filename="UnionFind.cpp" />
+		<Unit filename="UnionFind.h" />
+		<Unit filename="Xmen.cpp" />
+		<Unit filename="Xmen.h" />
+		<Unit filename="avl_rank.cpp" />
+		<Unit filename="avl_rank.h" />
+		<Unit filename="hashTable.h" />
+		<Unit filename="library2.cpp" />
+		<Unit filename="library2.h" />
+		<Unit filename="main2.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />
