@@ -9,6 +9,4 @@ namespace my_exceptions
 	class fail : public std::exception{};
 }
 
-#define VALIDATE_TEAM(team_id, n) (((team_id)<=0) || ((team_id)>(n)) == 0)
-
 #endif // EXCEPTIONS_H_INCLUDED
