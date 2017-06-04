@@ -23,7 +23,7 @@ Compare_Options Compare(avl_rank::Node::Info info1, avl_rank::Node::Info info2)
     return BIGGER;
 }
 
-avl_rank::avl_rank() : root(NULL) {}
+avl_rank::avl_rank() : root(NULL), size(0) {}
 
 avl_rank::~avl_rank()
 {
@@ -38,6 +38,11 @@ bool avl_rank::doesExist(int id, int rank)
 {
     avl_rank::Node::Info info(id, rank);
     return doesExist(root, info);
+}
+
+int avl_rank::get_size()
+{
+    return size;
 }
 
 int avl_rank::height(avl_rank::Node* node)
@@ -108,6 +113,7 @@ bool avl_rank::insert(int id, int lvl, int rank)
     if(doesExist(root, info)) return false;
     root = insert(root, info);
     setRanks(root);
+    size++;
     return true;
 }
 
@@ -160,6 +166,7 @@ bool avl_rank::remove(const int id, const int lvl, const int rank)
     int max = 0;
     root = remove(root, info, &max);
     setLevels(root);
+    size--;
     return true;
 }
 

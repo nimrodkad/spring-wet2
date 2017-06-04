@@ -36,6 +36,8 @@ public:
 
     bool doesExist(int id, int rank);
 
+    int get_size();
+
     class Node
     {
     public:
@@ -80,6 +82,8 @@ public:
     };
 
 private:
+
+    int size;
 
     avl_rank::Node* root;
 

@@ -46,8 +46,9 @@ void Xmen::JoinTeams(int Team1, int Team2)
 {
     int x = teams->Find(Team1);
     int y = teams->Find(Team2);
-    // Merge trees of x and y
+    if(x==y) return;
     teams->Union(x, y);
+    // Merge trees of x and y
 }
 
 void Xmen::TeamFight(int Team1, int Team2, int NumOfFighters)
