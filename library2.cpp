@@ -19,15 +19,15 @@ StatusType AddStudent(void *DS, int StudentID, int Team ,int Power)
         assert_not_null(DS);
         ((Xmen*)DS)->AddStudent(StudentID, Team, Power);
     }
-    catch(std::bad_alloc e)
+    catch(std::bad_alloc &e)
     {
         return ALLOCATION_ERROR;
     }
-    catch(my_exceptions::invalid e)
+    catch(my_exceptions::invalid &e)
     {
         return INVALID_INPUT;
     }
-    catch(my_exceptions::fail e)
+    catch(my_exceptions::fail &e)
     {
         return FAILURE;
     }
@@ -41,15 +41,15 @@ StatusType RemoveStudent(void *DS, int StudentID)
         assert_not_null(DS);
         ((Xmen*)DS)->RemoveStudent(StudentID);
     }
-    catch(std::bad_alloc e)
+    catch(std::bad_alloc &e)
     {
         return ALLOCATION_ERROR;
     }
-    catch(my_exceptions::invalid e)
+    catch(my_exceptions::invalid &e)
     {
         return INVALID_INPUT;
     }
-    catch(my_exceptions::fail e)
+    catch(my_exceptions::fail &e)
     {
         return FAILURE;
     }
@@ -63,15 +63,15 @@ StatusType JoinTeams(void *DS, int Team1, int Team2)
         assert_not_null(DS);
         ((Xmen*)DS)->JoinTeams(Team1, Team2);
     }
-    catch(std::bad_alloc e)
+    catch(std::bad_alloc &e)
     {
         return ALLOCATION_ERROR;
     }
-    catch(my_exceptions::invalid e)
+    catch(my_exceptions::invalid &e)
     {
         return INVALID_INPUT;
     }
-    catch(my_exceptions::fail e)
+    catch(my_exceptions::fail &e)
     {
         return FAILURE;
     }
@@ -85,15 +85,15 @@ StatusType TeamFight(void *DS, int Team1, int Team2, int NumOfFighters)
         assert_not_null(DS);
         ((Xmen*)DS)->TeamFight(Team1, Team2, NumOfFighters);
     }
-    catch(std::bad_alloc e)
+    catch(std::bad_alloc &e)
     {
         return ALLOCATION_ERROR;
     }
-    catch(my_exceptions::invalid e)
+    catch(my_exceptions::invalid &e)
     {
         return INVALID_INPUT;
     }
-    catch(my_exceptions::fail e)
+    catch(my_exceptions::fail &e)
     {
         return FAILURE;
     }
@@ -107,15 +107,15 @@ StatusType GetNumOfWins(void *DS, int Team, int* Wins)
         assert_not_null(DS);
         ((Xmen*)DS)->GetNumOfWins(Team, Wins);
     }
-    catch(std::bad_alloc e)
+    catch(std::bad_alloc &e)
     {
         return ALLOCATION_ERROR;
     }
-    catch(my_exceptions::invalid e)
+    catch(my_exceptions::invalid &e)
     {
         return INVALID_INPUT;
     }
-    catch(my_exceptions::fail e)
+    catch(my_exceptions::fail &e)
     {
         return FAILURE;
     }
@@ -129,15 +129,15 @@ StatusType GetStudentTeamLeader(void *DS, int StudentID, int* Leader)
         assert_not_null(DS);
         ((Xmen*)DS)->GetStudentTeamLeader(StudentID, Leader);
     }
-    catch(std::bad_alloc e)
+    catch(std::bad_alloc &e)
     {
         return ALLOCATION_ERROR;
     }
-    catch(my_exceptions::invalid e)
+    catch(my_exceptions::invalid &e)
     {
         return INVALID_INPUT;
     }
-    catch(my_exceptions::fail e)
+    catch(my_exceptions::fail &e)
     {
         return FAILURE;
     }
@@ -151,7 +151,7 @@ void Quit(void** DS)
         assert_not_null(DS);
         assert_not_null(*DS);
     }
-    catch(my_exceptions::invalid)
+    catch(my_exceptions::invalid &e)
     {
         return;
     }

@@ -15,6 +15,12 @@ Xmen::Xmen(int number_of_teams) :  teams(new UnionFind(int number_of_teams)),
         avl_students[i] = new avl_rank();
 }
 
+Xmen::Xmen(int numberOfTeams){
+	teams = new UnionFind(numberOfTeams);
+	studentHashTable = new HashTable<Student*>;
+	teamsTreeArray = new avl_rank<Student*>[numberOfTeams];
+}
+
 Xmen::~Xmen()
 {
     for(int i=0; i<teams.size(); i++)
