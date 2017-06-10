@@ -12,6 +12,7 @@ private:
     int uf_size;
     int* sets;
     int* sizes;
+
     int* wins;
     int* maxID;
 

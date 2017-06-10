@@ -8,12 +8,6 @@ typedef enum {
 
 Student* Validate_Student(HashTable<Student>* ht, int Magi_ID, Condition cond);
 
-Xmen::Xmen(int number_of_teams) :  teams(new UnionFind(int number_of_teams)),
-                                   avl_students(new avl_rank[number_of_teams]), ht_students(new HashTable<Student>())
-{
-    for(int i=0; i<number_of_teams; i++)
-        avl_students[i] = new avl_rank();
-}
 
 Xmen::Xmen(int numberOfTeams){
 	teams = new UnionFind*(numberOfTeams);
@@ -36,8 +30,8 @@ Xmen::~Xmen()
 void Xmen::AddStudent(int StudentID, int Team, int Power)
 {//we need to check for more errors here
     if(Power <= Student_Defines::MIN_POWER) throw invalid();
-    int x = teams->Find(Team);
     Validate_Student(ht_students, StudentID, DOESNT_EXIST);
+    int x = teams->Find(Team);
     Student student(Power, x, StudentID);
     avl_students[x]->insert(StudentID, Power);
     ht_students->insert(StudentID, &student);
@@ -50,22 +44,27 @@ void Xmen::RemoveStudent(int StudentID)
     int x = teams->Find(student->team());
     avl_students[x]->remove(StudentID, student->pwr());
     ht_students->remove(StudentID);
-    if(StudentID == teams->maxID[x]{
+    if(StudentID == teams->maxID[x]){
     	//replace student with the most powerfull student in the team
     }
 }
 
 void Xmen::JoinTeams(int Team1, int Team2) //should we also update the team variable in each student in the ht?
-{
+{//check for teams errors
     int x = teams->Find(Team1);
     int y = teams->Find(Team2);
     if(x==y) return;
     teams->Union(x, y);
     // Merge trees of x and y
+    teams->wins[x]+=teams->wins[y]; //which order exactly?
 }
 
 void Xmen::TeamFight(int Team1, int Team2, int NumOfFighters)
 {
+	if(Team1 <= 0 || Team1 >this->teams->size() ||
+			Team2 <= 0 || Team2 >this->teams->size()){
+			throw INVALID_INPUT;
+	}
     int x = teams->Find(Team1);
     int y = teams->Find(Team2);
     int wins1 = teams->get_wins(x);
@@ -87,7 +86,8 @@ void Xmen::GetNumOfWins(int Team,int *Wins){
 void Xmen::GetStudentTeamLeader(int StudentID,int *Leader){
 	if(StudentID <=0) throw INVALID_INPUT; ////need to change to valite functon - not sure how it works
 	Student * student=ht_students->find(StudentID);
-	Leader=teams->maxID[student->team_ID];
+	int x=teams->Find(student->team_ID);
+	Leader=teams->maxID[x];
 }
 
 
