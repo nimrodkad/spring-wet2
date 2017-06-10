@@ -8,6 +8,8 @@ namespace Avl_Defines
 {
     const int INVALID_RANK = -1;
 
+    const int INVALID_PWR = 0;
+
     const int INVALID_ID = -1;
 }
 
@@ -28,13 +30,13 @@ public:
 
     ~avl_rank();
 
-    bool insert(int id, int rank);
+    bool insert(int id, int pwr);
 
-    bool remove(const int id, const int rank);
+    bool remove(const int id, const int pwr);
 
-    int get_strongest(int rank);
+    //int get_strongest(int pwr);
 
-    bool doesExist(int id, int rank);
+    bool doesExist(int id, int pwr);
 
     int get_size();
 
@@ -46,9 +48,10 @@ public:
         {
 
             int id;
+            int pwr;
             int rank;
 
-            Info(const int id, const int rank) : id(id), rank(rank) {}
+            Info(const int id, const int pwr) : id(id), pwr(pwr) {}
 
         };
 
@@ -85,6 +88,10 @@ private:
 
     int size;
 
+    int max_id;
+
+    int max_pwr;
+
     avl_rank::Node* root;
 
     int height(avl_rank::Node* node);
@@ -107,7 +114,7 @@ private:
 
     avl_rank::Node* remove(avl_rank::Node* node, avl_rank::Node::Info info, int* max);
 
-    int get_strongest(avl_rank::Node* node, int rank);
+    //int get_strongest(avl_rank::Node* node, int pwr);
 
     bool doesExist(avl_rank::Node* node, avl_rank::Node::Info info);
 
