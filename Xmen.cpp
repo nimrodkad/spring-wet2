@@ -18,8 +18,10 @@ Xmen::Xmen(int number_of_teams) :  teams(new UnionFind(int number_of_teams)),
 Xmen::Xmen(int numberOfTeams){
 	teams = new UnionFind*(numberOfTeams);
 	ht_students = new HashTable<Student*>;
-	avl_students = new avl_rank<Student*>[numberOfTeams];
-
+	avl_students= new avl_rank*[numberOfTeams];
+	for(int i=0; i<numberOfTeams; i++){
+		avl_students[i] = new avl_rank();
+	}
 }
 
 Xmen::~Xmen()
@@ -32,7 +34,7 @@ Xmen::~Xmen()
 }
 
 void Xmen::AddStudent(int StudentID, int Team, int Power)
-{
+{//we need to check for more errors here
     if(Power <= Student_Defines::MIN_POWER) throw invalid();
     int x = teams->Find(Team);
     Validate_Student(ht_students, StudentID, DOESNT_EXIST);
@@ -53,7 +55,7 @@ void Xmen::RemoveStudent(int StudentID)
     }
 }
 
-void Xmen::JoinTeams(int Team1, int Team2) //should we update the team variable in each student in the ht?
+void Xmen::JoinTeams(int Team1, int Team2) //should we also update the team variable in each student in the ht?
 {
     int x = teams->Find(Team1);
     int y = teams->Find(Team2);
