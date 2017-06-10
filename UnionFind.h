@@ -13,6 +13,7 @@ private:
     int* sets;
     int* sizes;
     int* wins;
+    int* maxID;
 
 public:
 

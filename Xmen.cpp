@@ -16,14 +16,15 @@ Xmen::Xmen(int number_of_teams) :  teams(new UnionFind(int number_of_teams)),
 }
 
 Xmen::Xmen(int numberOfTeams){
-	teams = new UnionFind(numberOfTeams);
-	studentHashTable = new HashTable<Student*>;
-	teamsTreeArray = new avl_rank<Student*>[numberOfTeams];
+	teams = new UnionFind*(numberOfTeams);
+	ht_students = new HashTable<Student*>;
+	avl_students = new avl_rank<Student*>[numberOfTeams];
+
 }
 
 Xmen::~Xmen()
 {
-    for(int i=0; i<teams.size(); i++)
+    for(int i=0; i<teams->size()(); i++)
         delete avl_students[i];
     delete teams;
     delete[] avl_students;
@@ -38,6 +39,7 @@ void Xmen::AddStudent(int StudentID, int Team, int Power)
     Student student(Power, x, StudentID);
     avl_students[x]->insert(StudentID, Power);
     ht_students->insert(StudentID, &student);
+    //check if bigger than maxID power then we need to switch them and update the maxID;
 }
 
 void Xmen::RemoveStudent(int StudentID)
@@ -46,9 +48,12 @@ void Xmen::RemoveStudent(int StudentID)
     int x = teams->Find(student->team());
     avl_students[x]->remove(StudentID, student->pwr());
     ht_students->remove(StudentID);
+    if(StudentID == teams->maxID[x]{
+    	//replace student with the most powerfull student in the team
+    }
 }
 
-void Xmen::JoinTeams(int Team1, int Team2)
+void Xmen::JoinTeams(int Team1, int Team2) //should we update the team variable in each student in the ht?
 {
     int x = teams->Find(Team1);
     int y = teams->Find(Team2);
@@ -69,19 +74,20 @@ void Xmen::TeamFight(int Team1, int Team2, int NumOfFighters)
     avl_students->remove(magi->ID, magi->level(), magi->seniority());
 }
 
-void Xmen::ReleaseMagizoologist(int Magi_ID)
-{
-    Student* magi = Validate_Student(ht_students, Magi_ID, EXISTS);
-    magi->release();
-    avl_students->insert(Magi_ID, magi->level(), magi->seniority());
+void Xmen::GetNumOfWins(int Team,int *Wins){
+	if(Team <= 0 || Team >this->teams->size()){
+		throw INVALID_INPUT;
+	}
+	int x=teams->Find(Team);
+	Wins=teams->wins[x];
 }
 
-void Xmen::GetCreatureOfMagi(int Magi_ID, int* Creature)
-{
-    if(!Creature) throw invalid();
-    Student* magi = Validate_Student(ht_students, Magi_ID, EXISTS);
-    *Creature = magi->creatureAssined();
+void Xmen::GetStudentTeamLeader(int StudentID,int *Leader){
+	if(StudentID <=0) throw INVALID_INPUT; ////need to change to valite functon - not sure how it works
+	Student * student=ht_students->find(StudentID);
+	Leader=teams->maxID[student->team_ID];
 }
+
 
 Student* Validate_Student(HashTable<Student>* ht, int StudentID, Condition cond)
 {
