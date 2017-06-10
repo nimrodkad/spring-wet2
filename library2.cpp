@@ -105,6 +105,7 @@ StatusType GetNumOfWins(void *DS, int Team, int* Wins)
     try
     {
         assert_not_null(DS);
+        assert_not_null(Wins);
         ((Xmen*)DS)->GetNumOfWins(Team, Wins);
     }
     catch(std::bad_alloc &e)
@@ -127,6 +128,7 @@ StatusType GetStudentTeamLeader(void *DS, int StudentID, int* Leader)
     try
     {
         assert_not_null(DS);
+        assert_not_null(Leader);
         ((Xmen*)DS)->GetStudentTeamLeader(StudentID, Leader);
     }
     catch(std::bad_alloc &e)
