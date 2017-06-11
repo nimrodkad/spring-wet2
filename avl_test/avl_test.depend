@@ -1,0 +1,13 @@
+# depslib dependency file v1.0
+1497120966 source:c:\users\nimrod\onedrive\cs\ds\spring-wet2\spring-wet2\avl_test\avl_rank.cpp
+	<iostream>
+	"avl_rank.h"
+
+1497121121 c:\users\nimrod\onedrive\cs\ds\spring-wet2\spring-wet2\avl_test\avl_rank.h
+	<iostream>
+	<cstdlib>
+
+1497120438 source:c:\users\nimrod\onedrive\cs\ds\spring-wet2\spring-wet2\avl_test\main.cpp
+	<iostream>
+	"avl_rank.h"
+
