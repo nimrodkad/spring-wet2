@@ -115,7 +115,7 @@ int sumOfPower(avl_rank *tree,int num){
 		return 0;
 	}
 	if(num >= treeSize){
-		return tree->get_root()->info.rank; //need a function to get the root - its private now
+		return tree->get_root()->info.rank;
 	}
 	avl_rank::Node* node=tree->select(treeSize-num+1);
 	avl_rank::Node* last=tree->select(treeSize);
@@ -154,7 +154,7 @@ avl_rank::Node* lowestCommonAncestor(avl_rank *tree,avl_rank::Node* node, avl_ra
 
 //writing the search path of a given node to the nodesArray
 void getPath(avl_rank *tree,avl_rank::Node *node,avl_rank::Node **nodesArray){
-	avl_rank::Node *currentNode=tree->get_root();	//need a function to get the root - its private now
+	avl_rank::Node *currentNode=tree->get_root();
 	int counter=0;
 	while(currentNode->info.pwr != node->info.pwr){
 		nodesArray[counter++]=currentNode;
