@@ -19,7 +19,7 @@ Xmen::Xmen(int numberOfTeams){
 	teams = new UnionFind(numberOfTeams);
 	ht_students = new HashTable<Student>;
 	avl_students= new avl_rank*[numberOfTeams];
-	for(int i=0; i<numberOfTeams; i++){
+	for(int i=0; i<numberOfTeams + 1; i++){
 		avl_students[i] = new avl_rank();
 	}
 }
@@ -59,9 +59,9 @@ void Xmen::JoinTeams(int Team1, int Team2) //should we also update the team vari
     if(x==y) return;
     //check x and y sizes before union for merging
     if(teams->size(x) < teams->size(y)){
-    	//merge x to y !
+    	*avl_students[y] += *avl_students[x];
     }else{
-    	//merge y to x !
+    	*avl_students[x] += *avl_students[y];
     }
     teams->Union(x, y);
 }
@@ -109,41 +109,43 @@ Student* Validate_Student(HashTable<Student>* ht, int StudentID, Condition cond)
     return NULL;
 }
 
-int sumOfPower(avl_rank *tree,int num){
+int sumOfPower(avl_rank *tree,int num)
+{
 	int treeSize=tree->get_size();
-	if(treeSize == 0){
-		return 0;
-	}
-	if(num >= treeSize){
+	if(!treeSize) return 0;
+	if(num >= treeSize)
 		return tree->get_root()->info.rank;
-	}
 	avl_rank::Node* node=tree->select(treeSize-num+1);
 	avl_rank::Node* last=tree->select(treeSize);
 	avl_rank::Node* commonAncestor=lowestCommonAncestor(tree,node,last,treeSize);
-	if(node->left != NULL){
+	if(node->left)
 		return ((commonAncestor->info.rank) - (node->left->info.rank));
-	}
 	return commonAncestor->info.rank;
 }
 
-avl_rank::Node* lowestCommonAncestor(avl_rank *tree,avl_rank::Node* node, avl_rank::Node* last,int size){
+avl_rank::Node* lowestCommonAncestor(avl_rank *tree,avl_rank::Node* node, avl_rank::Node* last, int size)
+{
 	avl_rank::Node* lcaNode=NULL;
 	int pathSize=ceil(log2(size)+1);
 	avl_rank::Node **path1=new avl_rank::Node *[pathSize];
 	avl_rank::Node **path2=new avl_rank::Node *[pathSize];
-	for(int i=0;i<pathSize;i++){
+	for(int i=0;i<pathSize;i++)
+    {
 		path1[i]=NULL;
 		path2[i]=NULL;
 	}
 	getPath(tree,node,path1);
 	getPath(tree,last,path2);
-	for(int i=0;i<pathSize;i++){
-		if(path1[i] != path2[i]){ 	//first different node in both paths
+	for(int i=0;i<pathSize;i++)
+	{
+		if(path1[i] != path2[i])
+		{ 	//first different node in both paths
 			lcaNode=path1[i-1];		//the preior node is the Lca node
 			break;
 		}
 	}
-	if(lcaNode == NULL){		//lca node is the last node
+	if(lcaNode == NULL)
+	{		//lca node is the last node
 		lcaNode=path1[pathSize-1];
 	}
 	delete []path1;
@@ -153,7 +155,7 @@ avl_rank::Node* lowestCommonAncestor(avl_rank *tree,avl_rank::Node* node, avl_ra
 
 
 //writing the search path of a given node to the nodesArray
-void getPath(avl_rank *tree,avl_rank::Node *node,avl_rank::Node **nodesArray){
+void getPath(avl_rank *tree, avl_rank::Node *node, avl_rank::Node **nodesArray){
 	avl_rank::Node *currentNode=tree->get_root();
 	int counter=0;
 	while(currentNode->info.pwr != node->info.pwr){
