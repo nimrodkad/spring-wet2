@@ -6,6 +6,8 @@
 
 namespace Avl_Defines
 {
+    const int INVALID_SIZE = 0;
+
     const int INVALID_RANK = 0;
 
     const int INVALID_PWR = 0;
@@ -26,6 +28,8 @@ class avl_rank
 {
 public:
 
+    int max_id;
+
     avl_rank();
 
     ~avl_rank();
@@ -34,11 +38,13 @@ public:
 
     bool remove(const int id, const int pwr);
 
-    //int get_strongest(int pwr);
+    void operator+=(avl_rank& tree);
 
     bool doesExist(int id, int pwr);
 
     int get_size();
+
+    void print();
 
     class Node
     {
@@ -50,10 +56,17 @@ public:
             int id;
             int pwr;
             int rank;
+            int tree_size;
+
+            Info() {}
 
             Info(const int id, const int pwr) : id(id), pwr(pwr), rank(Avl_Defines::INVALID_RANK) {}
 
             Info(const int id, const int pwr, const int rank) : id(id), pwr(pwr), rank(rank) {}
+
+            Info(Info& info) : id(info.id), pwr(info.pwr), rank(info.rank), tree_size(info.tree_size) {}
+
+            //Info& operator=(const Info& info) {id = info.id; pwr = info.pwr; rank = info.rank; tree_size = info.tree_size;}
 
         };
 
@@ -63,19 +76,14 @@ public:
 
         Node *left, *right;
 
-        int rank_left, rank_right;
-
         Node(int i, int p) :
-            height(1), info(i, p), left(NULL), right(NULL),
-            rank_left(INVALID_RANK), rank_right(INVALID_RANK) {}
+            height(1), info(i, p), left(NULL), right(NULL){}
 
         Node(int i, int p, int r) :
-            height(1), info(i, p, r), left(NULL), right(NULL),
-            rank_left(INVALID_RANK), rank_right(INVALID_RANK) {}
+            height(1), info(i, p, r), left(NULL), right(NULL){}
 
         Node(Info info) :
-            height(1), info(info.i, info.p, info.r), left(NULL), right(NULL),
-            rank_left(INVALID_RANK), rank_right(INVALID_RANK) {}
+            height(1), info(info.id, info.pwr, info.rank), left(NULL), right(NULL){}
 
         ~Node() {}
 
@@ -96,13 +104,11 @@ public:
 
 private:
 
+    avl_rank::Node* root;
+
     int size;
 
-    int max_id;
-
     int max_pwr;
-
-    avl_rank::Node* root;
 
     int height(avl_rank::Node* node);
 
@@ -118,17 +124,27 @@ private:
 
     avl_rank::Node* insert(avl_rank::Node*, avl_rank::Node::Info info);
 
+    avl_rank::Node* find_max(avl_rank::Node* node);
+
     avl_rank::Node* find_min(avl_rank::Node* node);
 
     avl_rank::Node* remove_min(avl_rank::Node* node);
 
-    avl_rank::Node* remove(avl_rank::Node* node, avl_rank::Node::Info info, int* max);
-
-    //int get_strongest(avl_rank::Node* node, int pwr);
+    avl_rank::Node* remove(avl_rank::Node* node, avl_rank::Node::Info info);
 
     bool doesExist(avl_rank::Node* node, avl_rank::Node::Info info);
 
     void setRanks(avl_rank::Node *node);
+
+    void setSizes(avl_rank::Node *node);
+
+    void addToArray(avl_rank::Node* node, avl_rank::Node::Info array[], int* i);
+
+    avl_rank::Node* make_tree(avl_rank::Node::Info array[], int start, int end);
+
+    avl_rank::Node* merge(avl_rank::Node* node1, int size1, avl_rank::Node* node2, int size2);
+
+    void print(avl_rank::Node* node);
 };
 
 
