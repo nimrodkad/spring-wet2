@@ -32,6 +32,8 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="avl_rank.cpp" />
+		<Unit filename="avl_rank.h" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<code_completion />

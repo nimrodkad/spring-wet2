@@ -6,6 +6,8 @@
 
 namespace Avl_Defines
 {
+    const int INVALID_SIZE = 0;
+
     const int INVALID_RANK = 0;
 
     const int INVALID_PWR = 0;
@@ -52,6 +54,7 @@ public:
             int id;
             int pwr;
             int rank;
+            int tree_size;
 
             Info() {}
 
