@@ -9,7 +9,7 @@ typedef enum {
 } Condition;
 
 Student* Validate_Student(HashTable<Student>* ht, int studentID, Condition cond);
-int sumOfPower(avl_rank tree,int num);
+int sumOfPower(avl_rank *tree,int num);
 void getPath(avl_rank *tree,avl_rank::Node *node,avl_rank::Node **nodesArray);
 avl_rank::Node* lowestCommonAncestor(avl_rank *tree,avl_rank::Node* node, avl_rank::Node* last,int size);
 
