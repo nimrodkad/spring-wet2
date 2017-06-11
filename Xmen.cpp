@@ -65,7 +65,7 @@ void Xmen::TeamFight(int Team1, int Team2, int NumOfFighters)
     int x = teams->Find(Team1);
     int y = teams->Find(Team2);
     if( x == y ) return; //same teams
-    int sum1=sumOfPower(avl_students[x],NumOfFighters);				//TODO
+    int sum1=sumOfPower(avl_students[x],NumOfFighters);			////////////////////////////////////////////////				//TODO
     int sum2=sumOfPower(avl_students[y],NumOfFighters);
     if(sum1 > sum2){
     	teams->update_wins(x);
