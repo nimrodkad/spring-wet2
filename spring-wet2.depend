@@ -1,0 +1,48 @@
+# depslib dependency file v1.0
+1497188520 source:c:\users\nimrod\onedrive\cs\ds\spring-wet2\spring-wet2\avl_rank.cpp
+	<iostream>
+	"avl_rank.h"
+
+1497188482 c:\users\nimrod\onedrive\cs\ds\spring-wet2\spring-wet2\avl_rank.h
+	<iostream>
+	<cstdlib>
+
+1497177954 source:c:\users\nimrod\onedrive\cs\ds\spring-wet2\spring-wet2\library2.cpp
+	"library2.h"
+	"Xmen.h"
+
+1496507585 c:\users\nimrod\onedrive\cs\ds\spring-wet2\spring-wet2\library2.h
+
+1496583805 c:\users\nimrod\onedrive\cs\ds\spring-wet2\spring-wet2\xmen.h
+	"avl_rank.h"
+	"UnionFind.h"
+	"hashTable.h"
+	"Student.h"
+	"Exceptions.h"
+
+1497181982 c:\users\nimrod\onedrive\cs\ds\spring-wet2\spring-wet2\unionfind.h
+	"Exceptions.h"
+
+1496598181 c:\users\nimrod\onedrive\cs\ds\spring-wet2\spring-wet2\exceptions.h
+	<exception>
+
+1484600884 c:\users\nimrod\onedrive\cs\ds\spring-wet2\spring-wet2\hashtable.h
+
+1496508535 c:\users\nimrod\onedrive\cs\ds\spring-wet2\spring-wet2\student.h
+	"Exceptions.h"
+
+1496507589 source:c:\users\nimrod\onedrive\cs\ds\spring-wet2\spring-wet2\main2.cpp
+	<assert.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"library2.h"
+	<iostream>
+
+1497188366 source:c:\users\nimrod\onedrive\cs\ds\spring-wet2\spring-wet2\unionfind.cpp
+	"UnionFind.h"
+
+1497188445 source:c:\users\nimrod\onedrive\cs\ds\spring-wet2\spring-wet2\xmen.cpp
+	<iostream>
+	"Xmen.h"
+

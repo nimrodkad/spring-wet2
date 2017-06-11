@@ -28,6 +28,8 @@ class avl_rank
 {
 public:
 
+    int max_id;
+
     avl_rank();
 
     ~avl_rank();
@@ -105,8 +107,6 @@ private:
     avl_rank::Node* root;
 
     int size;
-
-    int max_id;
 
     int max_pwr;
 

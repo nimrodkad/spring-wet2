@@ -23,7 +23,7 @@ Compare_Options Compare(avl_rank::Node::Info info1, avl_rank::Node::Info info2)
     return BIGGER;
 }
 
-avl_rank::avl_rank() : root(NULL), size(0), max_id(Avl_Defines::INVALID_ID), max_pwr(Avl_Defines::INVALID_PWR) {}
+avl_rank::avl_rank() : max_id(Avl_Defines::INVALID_ID), root(NULL), size(0), max_pwr(Avl_Defines::INVALID_PWR) {}
 
 avl_rank::~avl_rank()
 {

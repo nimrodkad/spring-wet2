@@ -26,6 +26,11 @@ int UnionFind::size()
     return uf_size;
 }
 
+int UnionFind::size(int id)
+{
+	return sizes[Find(id)];
+}
+
 bool UnionFind::isInSet(int id)
 {
     return (!(id <= 0 || id > size()));
@@ -70,12 +75,6 @@ bool UnionFind::areConnected(int id1, int id2)
     return(Find(id1) == Find(id2));
 }
 
-int UnionFind::AreaSize(int id)
-{
-    int x = Find(id);
-    return sizes[x];
-}
-
 int UnionFind::get_wins(int id)
 {
     return wins[Find(id)];
@@ -84,9 +83,5 @@ int UnionFind::get_wins(int id)
 void UnionFind::update_wins(int id)
 {
     wins[Find(id)]++;
-}
-
-int UnionFind::size(int id){
-	return sizes[Find(id)];
 }
 

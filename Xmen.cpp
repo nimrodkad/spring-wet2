@@ -10,8 +10,8 @@ Student* Validate_Student(HashTable<Student>* ht, int studentID, Condition cond)
 
 
 Xmen::Xmen(int numberOfTeams){
-	teams = new UnionFind*(numberOfTeams);
-	ht_students = new HashTable<Student*>;
+	teams = new UnionFind(numberOfTeams);
+	ht_students = new HashTable<Student>;
 	avl_students= new avl_rank*[numberOfTeams];
 	for(int i=0; i<numberOfTeams; i++){
 		avl_students[i] = new avl_rank();
@@ -34,7 +34,7 @@ void Xmen::AddStudent(int StudentID, int Team, int Power)
     Validate_Student(ht_students, StudentID, DOESNT_EXIST);
     int x = teams->Find(Team);
     Student student(Power, x, StudentID);
-    avl_students[x]->insert(StudentID, Power); //check if maxID changed
+    avl_students[x]->insert(StudentID, Power);
     ht_students->insert(StudentID, &student);
 }
 
@@ -46,16 +46,15 @@ void Xmen::RemoveStudent(int StudentID)
     ht_students->remove(StudentID);
 }
 
-void Xmen::JoinTeams(int Team1, int Team2) //should we also update the team variable in each student in the ht?
-{//check for teams errors
+void Xmen::JoinTeams(int Team1, int Team2)
+{
     int x = teams->Find(Team1);
     int y = teams->Find(Team2);
     if(x==y) return;
-    //check x and y sizes before union for merging
     if(teams->size(x) < teams->size(y)){
-    	//merge x to y !
+    	avl_students[y]+=avl_students[x];
     }else{
-    	//merge y to x !
+    	avl_students[x]+=avl_students[y];
     }
     teams->Union(x, y);
 }
@@ -65,14 +64,14 @@ void Xmen::TeamFight(int Team1, int Team2, int NumOfFighters)
     int x = teams->Find(Team1);
     int y = teams->Find(Team2);
     if( x == y ) return; //same teams
-    int sum1=sumOfPower(avl_students[x],NumOfFighters);			////////////////////////////////////////////////				//TODO
-    int sum2=sumOfPower(avl_students[y],NumOfFighters);
-    if(sum1 > sum2){
-    	teams->update_wins(x);
-    }
-    else if(sum1 < sum2){
-    	teams->update_wins(y);
-    }
+//    int sum1=sumOfPower(avl_students[x],NumOfFighters);			////////////////////////////////////////////////				//TODO
+//    int sum2=sumOfPower(avl_students[y],NumOfFighters);
+//    if(sum1 > sum2){
+//    	teams->update_wins(x);
+//    }
+//    else if(sum1 < sum2){
+//    	teams->update_wins(y);
+//    }
 }
 
 void Xmen::GetNumOfWins(int Team,int *Wins){
@@ -81,7 +80,7 @@ void Xmen::GetNumOfWins(int Team,int *Wins){
 
 void Xmen::GetStudentTeamLeader(int StudentID,int *Leader){
     Student* student = Validate_Student(ht_students, StudentID, EXISTS);
-	int x=teams->Find(student->team_ID);
+	int x=teams->Find(student->team());
 	*Leader=avl_students[x]->max_id; 										//TODO
 }
 
