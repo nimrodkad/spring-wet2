@@ -29,7 +29,9 @@
 			</Target>
 		</Build>
 		<Compiler>
-			<Add option="-Wall" />
+			<Add option="-pedantic-errors" />
+			<Add option="-w" />
+			<Add option="-std=c++0x" />
 			<Add option="-fexceptions" />
 		</Compiler>
 		<Unit filename="avl_rank.cpp" />
