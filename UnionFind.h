@@ -12,9 +12,7 @@ private:
     int uf_size;
     int* sets;
     int* sizes;
-
     int* wins;
-    int* maxID;
 
 public:
 
@@ -23,6 +21,8 @@ public:
     ~UnionFind();
 
     int size();
+
+    int size(int ID);
 
     bool isInSet(int id);
 

@@ -6,13 +6,11 @@ UnionFind::UnionFind(int N) : uf_size(N)
     this->sets = new int[N+1];
     this->sizes = new int[N+1];
     this->wins = new int[N+1];
-    this->maxID =new int[N+1];
     for(int i=0; i<N+1; i++)
     {
         sets[i] = i;
         sizes[i] = 1;
         wins[i] = 0;
-        maxID[i] =0;
     }
 }
 
@@ -21,7 +19,6 @@ UnionFind::~UnionFind()
     delete[] sets;
     delete[] sizes;
     delete[] wins;
-    delete[] maxID;
 }
 
 int UnionFind::size()
@@ -87,5 +84,9 @@ int UnionFind::get_wins(int id)
 void UnionFind::update_wins(int id)
 {
     wins[Find(id)]++;
+}
+
+int UnionFind::size(int id){
+	return sizes[Find(id)];
 }
 
