@@ -1,11 +1,12 @@
 # depslib dependency file v1.0
-1497195550 source:c:\users\nimrod\onedrive\cs\ds\spring-wet2\spring-wet2\avl_rank.cpp
+1497215517 source:c:\users\nimrod\onedrive\cs\ds\spring-wet2\spring-wet2\avl_rank.cpp
 	<iostream>
 	"avl_rank.h"
 
-1497195550 c:\users\nimrod\onedrive\cs\ds\spring-wet2\spring-wet2\avl_rank.h
+1497215745 c:\users\nimrod\onedrive\cs\ds\spring-wet2\spring-wet2\avl_rank.h
 	<iostream>
 	<cstdlib>
+	<math.h>
 
 1497195151 source:c:\users\nimrod\onedrive\cs\ds\spring-wet2\spring-wet2\library2.cpp
 	"library2.h"
@@ -42,9 +43,7 @@
 1497188366 source:c:\users\nimrod\onedrive\cs\ds\spring-wet2\spring-wet2\unionfind.cpp
 	"UnionFind.h"
 
-1497199731 source:c:\users\nimrod\onedrive\cs\ds\spring-wet2\spring-wet2\xmen.cpp
+1497215552 source:c:\users\nimrod\onedrive\cs\ds\spring-wet2\spring-wet2\xmen.cpp
 	<iostream>
 	"Xmen.h"
-	"assert.h"
-	<math.h>
 

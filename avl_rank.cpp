@@ -217,7 +217,7 @@ avl_rank::Node* avl_rank::select(avl_rank::Node* node, int k)
     //if(!node) return NULL;
     if(node_rank(node->left) == k-1) return node;
     if(node_rank(node->left) > k-1) return select(node->left, k);
-    if(node_rank(node->left) < k-1) return select(node->right, k-node_rank(node->left)-1);
+    return select(node->right, k-node_rank(node->left)-1);
 }
 
 bool avl_rank::doesExist(avl_rank::Node* node, avl_rank::Node::Info info)
@@ -328,6 +328,53 @@ avl_rank::Node* avl_rank::merge(avl_rank::Node* node1, int size1, avl_rank::Node
     delete[] array2;
     delete[] result;
     return tree;
+}
+
+avl_rank::Node* avl_rank::lowestCommonAncestor(avl_rank::Node* node, avl_rank::Node* last)
+{
+	avl_rank::Node* lcaNode=NULL;
+	int pathSize=(ceil(log2(size))+1);
+	avl_rank::Node **path1=new avl_rank::Node *[pathSize];
+	avl_rank::Node **path2=new avl_rank::Node *[pathSize];
+	for(int i=0;i<pathSize;i++)
+    {
+		path1[i]=NULL;
+		path2[i]=NULL;
+	}
+	getPath(node,path1);
+	getPath(last,path2);
+	for(int i=0;i<pathSize;i++)
+	{
+		if(path1[i] != path2[i])
+		{ 	//first different node in both paths
+			lcaNode=path1[i-1];		//the preior node is the Lca node
+			break;
+		}
+	}
+	if(lcaNode == NULL)
+	{		//lca node is the last node
+		lcaNode=path1[pathSize-1];
+	}
+	delete []path1;
+	delete []path2;
+	return lcaNode;
+}
+
+
+//writing the search path of a given node to the nodesArray
+void avl_rank::getPath(avl_rank::Node *node, avl_rank::Node **nodesArray)
+{
+	avl_rank::Node *currentNode=root;
+	int counter=0;
+	while(currentNode->info.pwr != node->info.pwr)
+    {
+		nodesArray[counter++]=currentNode;
+		if(((currentNode->left == NULL) && (currentNode->right != NULL)) || (currentNode->left->info.rank < node->info.pwr))
+			currentNode=currentNode->right;
+		else
+			currentNode=currentNode->left;
+	}
+	nodesArray[counter++]=currentNode;
 }
 
 void avl_rank::print()
