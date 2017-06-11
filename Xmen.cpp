@@ -126,7 +126,7 @@ int sumOfPower(avl_rank *tree,int num)
 avl_rank::Node* lowestCommonAncestor(avl_rank *tree,avl_rank::Node* node, avl_rank::Node* last, int size)
 {
 	avl_rank::Node* lcaNode=NULL;
-	int pathSize=ceil(log2(size)+1);
+	int pathSize=(ceil(log2(size))+1);
 	avl_rank::Node **path1=new avl_rank::Node *[pathSize];
 	avl_rank::Node **path2=new avl_rank::Node *[pathSize];
 	for(int i=0;i<pathSize;i++)
@@ -160,8 +160,8 @@ void getPath(avl_rank *tree, avl_rank::Node *node, avl_rank::Node **nodesArray){
 	int counter=0;
 	while(currentNode->info.pwr != node->info.pwr){
 		nodesArray[counter++]=currentNode;
-		assert(currentNode->left != NULL);   //sanity check
-		if(currentNode->left->info.rank > node->info.pwr){
+		if(		((currentNode->left == NULL) && (currentNode->right != NULL)) ||
+				(currentNode->left->info.rank < node->info.pwr)){
 			currentNode=currentNode->right;
 		}else{
 			currentNode=currentNode->left;
