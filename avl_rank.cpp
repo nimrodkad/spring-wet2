@@ -201,6 +201,25 @@ avl_rank::Node* avl_rank::remove(avl_rank::Node* node, avl_rank::Node::Info info
     return balance_node(node);
 }
 
+int node_rank(avl_rank::Node* node)
+{
+    return node ? node->info.tree_size : 0;
+}
+
+avl_rank::Node* avl_rank::select(int k)
+{
+    if(k>size) return root;
+    return select(root, k);
+}
+
+avl_rank::Node* avl_rank::select(avl_rank::Node* node, int k)
+{
+    //if(!node) return NULL;
+    if(node_rank(node->left) == k-1) return node;
+    if(node_rank(node->left) > k-1) return select(node->left, k);
+    if(node_rank(node->left) < k-1) return select(node->right, k-node_rank(node->left)-1);
+}
+
 bool avl_rank::doesExist(avl_rank::Node* node, avl_rank::Node::Info info)
 {
     if(!node) return false;
@@ -288,6 +307,7 @@ void avl_rank::operator+=(avl_rank& tree)
     root = merge(root, size, tree.root, tree.size);
     setRanks(root);
     setSizes(root);
+    size+=tree.size;
 }
 
 avl_rank::Node* avl_rank::merge(avl_rank::Node* node1, int size1, avl_rank::Node* node2, int size2)

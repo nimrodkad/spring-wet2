@@ -28,22 +28,6 @@ class avl_rank
 {
 public:
 
-    avl_rank();
-
-    ~avl_rank();
-
-    bool insert(int id, int pwr);
-
-    bool remove(const int id, const int pwr);
-
-    void operator+=(avl_rank& tree);
-
-    bool doesExist(int id, int pwr);
-
-    int get_size();
-
-    void print();
-
     class Node
     {
     public:
@@ -100,13 +84,31 @@ public:
         }
     };
 
+    int max_id;
+
+    avl_rank();
+
+    ~avl_rank();
+
+    bool insert(int id, int pwr);
+
+    bool remove(const int id, const int pwr);
+
+    void operator+=(avl_rank& tree);
+
+    bool doesExist(int id, int pwr);
+
+    int get_size();
+
+    avl_rank::Node* select(int k);
+
+    void print();
+
 private:
 
     avl_rank::Node* root;
 
     int size;
-
-    int max_id;
 
     int max_pwr;
 
@@ -131,6 +133,8 @@ private:
     avl_rank::Node* remove_min(avl_rank::Node* node);
 
     avl_rank::Node* remove(avl_rank::Node* node, avl_rank::Node::Info info);
+
+    avl_rank::Node* select(avl_rank::Node* node, int k);
 
     bool doesExist(avl_rank::Node* node, avl_rank::Node::Info info);
 
