@@ -102,6 +102,8 @@ public:
 
     avl_rank::Node* select(int k);
 
+    avl_rank::Node* get_root();
+
     void print();
 
 private:

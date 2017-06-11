@@ -335,6 +335,11 @@ void avl_rank::print()
     print(root);
 }
 
+avl_rank::Node* avl_rank::get_root()
+{
+    return root;
+}
+
 void avl_rank::print(avl_rank::Node* node)
 {
     if(!node) return;
