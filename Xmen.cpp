@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Xmen.h"
 #include "assert.h"
+#include <math.h>
 
 typedef enum {
 	EXISTS,
@@ -109,6 +110,9 @@ Student* Validate_Student(HashTable<Student>* ht, int StudentID, Condition cond)
 }
 
 int sumOfPower(avl_rank *tree,int num){
+	if(tree->size == 0){
+		return 0;
+	}
 	if(num >= tree->size){
 		return tree->root->info.rank;
 	}
