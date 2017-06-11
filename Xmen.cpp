@@ -52,9 +52,9 @@ void Xmen::JoinTeams(int Team1, int Team2)
     int y = teams->Find(Team2);
     if(x==y) return;
     if(teams->size(x) < teams->size(y)){
-    	avl_students[y]+=avl_students[x];
+    	*avl_students[y]+=*avl_students[x];
     }else{
-    	avl_students[x]+=avl_students[y];
+    	*avl_students[x]+=*avl_students[y];
     }
     teams->Union(x, y);
 }

@@ -162,9 +162,17 @@ bool avl_rank::remove(const int id, const int pwr)
     setRanks(root);
     setSizes(root);
     size--;
-    Node* max = find_max(root);
-    max_pwr = max->info.pwr;
-    max_id = max->info.id;
+    if(size)
+    {
+        Node* max = find_max(root);
+        max_pwr = max->info.pwr;
+        max_id = max->info.id;
+    }
+    else
+    {
+        max_pwr = Avl_Defines::INVALID_PWR;
+        max_id = Avl_Defines::INVALID_ID;
+    }
     return true;
 }
 
@@ -285,6 +293,8 @@ void avl_rank::operator+=(avl_rank& tree)
 avl_rank::Node* avl_rank::merge(avl_rank::Node* node1, int size1, avl_rank::Node* node2, int size2)
 {
     if((!node1 && !node2) || (!node1->height && !node2->height)) return NULL;
+    if(!size1) return node2;
+    if(!size2) return node1;
     Node::Info* array1 = new Node::Info[size1];
     Node::Info* array2 = new Node::Info[size2];
     int i=0;
