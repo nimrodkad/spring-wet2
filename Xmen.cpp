@@ -6,7 +6,7 @@ typedef enum {
 	DOESNT_EXIST
 } Condition;
 
-Student* Validate_Student(HashTable<Student>* ht, int Magi_ID, Condition cond);
+Student* Validate_Student(HashTable<Student>* ht, int studentID, Condition cond);
 
 
 Xmen::Xmen(int numberOfTeams){

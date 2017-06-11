@@ -148,16 +148,6 @@ StatusType GetStudentTeamLeader(void *DS, int StudentID, int* Leader)
 
 void Quit(void** DS)
 {
-    try
-    {
-        assert_not_null(DS);
-        assert_not_null(*DS);
-    }
-    catch(my_exceptions::invalid &e)
-    {
-        return;
-    }
-    delete *(Xmen**)DS;
+    delete (Xmen*)*DS;
     *DS = NULL;
-    return;
 }
