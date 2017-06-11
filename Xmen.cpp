@@ -20,11 +20,12 @@ Xmen::Xmen(int numberOfTeams){
 
 Xmen::~Xmen()
 {
-    for(int i=0; i<teams->size()(); i++)
+    for(int i=0; i<teams->size(); i++){
         delete avl_students[i];
-    delete teams;
+    }
     delete[] avl_students;
     delete ht_students;
+    delete teams;
 }
 
 void Xmen::AddStudent(int StudentID, int Team, int Power)
