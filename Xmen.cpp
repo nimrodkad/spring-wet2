@@ -16,8 +16,8 @@ avl_rank::Node* lowestCommonAncestor(avl_rank *tree,avl_rank::Node* node, avl_ra
 
 
 Xmen::Xmen(int numberOfTeams){
-	teams = new UnionFind*(numberOfTeams);
-	ht_students = new HashTable<Student*>;
+	teams = new UnionFind(numberOfTeams);
+	ht_students = new HashTable<Student>;
 	avl_students= new avl_rank*[numberOfTeams];
 	for(int i=0; i<numberOfTeams; i++){
 		avl_students[i] = new avl_rank();
@@ -87,7 +87,7 @@ void Xmen::GetNumOfWins(int Team,int *Wins){
 
 void Xmen::GetStudentTeamLeader(int StudentID,int *Leader){
     Student* student = Validate_Student(ht_students, StudentID, EXISTS);
-	int x=teams->Find(student->team_ID);
+	int x=teams->Find(student->team());
 	*Leader=avl_students[x]->max_id; 										//TODO
 }
 
@@ -110,15 +110,16 @@ Student* Validate_Student(HashTable<Student>* ht, int StudentID, Condition cond)
 }
 
 int sumOfPower(avl_rank *tree,int num){
-	if(tree->size == 0){
+	int treeSize=tree->get_size();
+	if(treeSize == 0){
 		return 0;
 	}
-	if(num >= tree->size){
-		return tree->root->info.rank;
+	if(num >= treeSize){
+		return tree->root->info.rank; //need a function to get the root - its private now
 	}
-	avl_rank::Node* node=tree->select(tree->size-num+1);
-	avl_rank::Node* last=tree->select(tree->size);
-	avl_rank::Node* commonAncestor=lowestCommonAncestor(tree,node,last,tree->size);
+	avl_rank::Node* node=tree->select(treeSize-num+1);
+	avl_rank::Node* last=tree->select(treeSize);
+	avl_rank::Node* commonAncestor=lowestCommonAncestor(tree,node,last,treeSize);
 	if(node->left != NULL){
 		return ((commonAncestor->info.rank) - (node->left->info.rank));
 	}
@@ -153,7 +154,7 @@ avl_rank::Node* lowestCommonAncestor(avl_rank *tree,avl_rank::Node* node, avl_ra
 
 //writing the search path of a given node to the nodesArray
 void getPath(avl_rank *tree,avl_rank::Node *node,avl_rank::Node **nodesArray){
-	avl_rank::Node *currentNode=tree->root;
+	avl_rank::Node *currentNode=tree->root;	//need a function to get the root - its private now
 	int counter=0;
 	while(currentNode->info.pwr != node->info.pwr){
 		nodesArray[counter++]=currentNode;
