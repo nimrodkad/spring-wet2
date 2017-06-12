@@ -104,14 +104,14 @@ Student* Validate_Student(HashTable<Student>* ht, int StudentID, Condition cond)
     return NULL;
 }
 
-int sumOfPower(avl_rank *tree,int num)
+int sumOfPower(avl_rank* tree,int num)
 {
 	int treeSize=tree->get_size();
 	if(!treeSize) return 0;
 	if(num >= treeSize) return tree->get_root()->info.rank;
 	avl_rank::Node* node=tree->select(treeSize-num+1);
 	avl_rank::Node* last=tree->select(treeSize);
-	avl_rank::Node* commonAncestor=tree->lowestCommonAncestor(node,last);
-	if(node->left) return ((commonAncestor->info.rank) - (node->left->info.rank));
-	return commonAncestor->info.rank;
+	int commonAncestor=tree->lowestCommonAncestor(node,last);
+	if(node->left) return (commonAncestor - (node->left->info.rank));
+	return commonAncestor;
 }

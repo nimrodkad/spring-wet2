@@ -1,13 +1,14 @@
 # depslib dependency file v1.0
-1497195123 source:c:\users\nimrod\onedrive\cs\ds\spring-wet2\spring-wet2\avl_test\avl_rank.cpp
+1497278606 source:c:\users\nimrod\onedrive\cs\ds\spring-wet2\spring-wet2\avl_test\avl_rank.cpp
 	<iostream>
 	"avl_rank.h"
 
-1497193942 c:\users\nimrod\onedrive\cs\ds\spring-wet2\spring-wet2\avl_test\avl_rank.h
+1497215745 c:\users\nimrod\onedrive\cs\ds\spring-wet2\spring-wet2\avl_test\avl_rank.h
 	<iostream>
 	<cstdlib>
+	<math.h>
 
-1497194882 source:c:\users\nimrod\onedrive\cs\ds\spring-wet2\spring-wet2\avl_test\main.cpp
+1497278899 source:c:\users\nimrod\onedrive\cs\ds\spring-wet2\spring-wet2\avl_test\main.cpp
 	<iostream>
 	"avl_rank.h"
 

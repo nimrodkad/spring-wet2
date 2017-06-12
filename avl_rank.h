@@ -103,7 +103,7 @@ public:
 
     avl_rank::Node* get_root();
 
-    avl_rank::Node* lowestCommonAncestor(avl_rank::Node* node, avl_rank::Node* last);
+    int lowestCommonAncestor(avl_rank::Node* node, avl_rank::Node* last);
 
     void print();
 

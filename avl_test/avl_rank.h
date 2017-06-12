@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <cstdlib>
+#include <math.h>
 
 namespace Avl_Defines
 {
@@ -42,13 +43,11 @@ public:
 
             Info() {}
 
-            Info(const int id, const int pwr) : id(id), pwr(pwr), rank(Avl_Defines::INVALID_RANK) {}
+            Info(const int id, const int pwr) : id(id), pwr(pwr), rank(Avl_Defines::INVALID_RANK), tree_size(Avl_Defines::INVALID_SIZE) {}
 
-            Info(const int id, const int pwr, const int rank) : id(id), pwr(pwr), rank(rank) {}
+            Info(const int id, const int pwr, const int rank) : id(id), pwr(pwr), rank(rank), tree_size(Avl_Defines::INVALID_SIZE) {}
 
             Info(Info& info) : id(info.id), pwr(info.pwr), rank(info.rank), tree_size(info.tree_size) {}
-
-            //Info& operator=(const Info& info) {id = info.id; pwr = info.pwr; rank = info.rank; tree_size = info.tree_size;}
 
         };
 
@@ -102,6 +101,10 @@ public:
 
     avl_rank::Node* select(int k);
 
+    avl_rank::Node* get_root();
+
+    int lowestCommonAncestor(avl_rank::Node* node, avl_rank::Node* last);
+
     void print();
 
 private:
@@ -147,6 +150,8 @@ private:
     avl_rank::Node* make_tree(avl_rank::Node::Info array[], int start, int end);
 
     avl_rank::Node* merge(avl_rank::Node* node1, int size1, avl_rank::Node* node2, int size2);
+
+    void getPath(avl_rank::Node *node, avl_rank::Node **nodesArray);
 
     void print(avl_rank::Node* node);
 };
