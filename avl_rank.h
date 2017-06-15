@@ -152,7 +152,7 @@ private:
 
     avl_rank::Node* merge(avl_rank::Node* node1, int size1, avl_rank::Node* node2, int size2);
 
-    void getPath(avl_rank::Node *node, avl_rank::Node **nodesArray);
+    void getPath(avl_rank::Node *current,avl_rank::Node *node, avl_rank::Node **nodesArray,int counter);
 
     void print(avl_rank::Node* node);
 };
