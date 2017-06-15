@@ -4,6 +4,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <math.h>
+#include <assert.h>
 
 namespace Avl_Defines
 {
@@ -93,7 +94,7 @@ public:
 
     bool remove(const int id, const int pwr);
 
-    void operator+=(avl_rank& tree);
+    void operator+=(avl_rank* tree);
 
     bool doesExist(int id, int pwr);
 

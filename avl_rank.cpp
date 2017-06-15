@@ -109,11 +109,9 @@ bool avl_rank::insert(int id, int pwr)
     setRanks(root);
     setSizes(root);
     size++;
-    if(pwr > max_pwr)
-    {
-        max_pwr = pwr;
-        max_id = id;
-    }
+    Node* max = find_max(root);
+    max_pwr = max->info.pwr;
+    max_id = max->info.id;
     return true;
 }
 
@@ -208,16 +206,15 @@ int node_rank(avl_rank::Node* node)
 
 avl_rank::Node* avl_rank::select(int k)
 {
-    if(k>size) return root;
     return select(root, k);
 }
 
 avl_rank::Node* avl_rank::select(avl_rank::Node* node, int k)
 {
-    //if(!node) return NULL;
+    assert(node); //sanity check
     if(node_rank(node->left) == k-1) return node;
     if(node_rank(node->left) > k-1) return select(node->left, k);
-    return select(node->right, k-node_rank(node->left)-1);
+    return select(node->right, k - node_rank(node->left) - 1);
 }
 
 bool avl_rank::doesExist(avl_rank::Node* node, avl_rank::Node::Info info)
@@ -302,17 +299,22 @@ avl_rank::Node* avl_rank::make_tree(avl_rank::Node::Info array[], int start, int
     return balance_node(node);
 }
 
-void avl_rank::operator+=(avl_rank& tree)
+void avl_rank::operator+=(avl_rank* tree)
 {
-    root = merge(root, size, tree.root, tree.size);
+    root = merge(root, size, tree->root, tree->size);
+    if(!root) return;
     setRanks(root);
     setSizes(root);
-    size+=tree.size;
+    size+=tree->size;
+    Node::Info info1(max_id, max_pwr);
+    Node::Info info2(tree->max_id, tree->max_pwr);
+    max_pwr = Max(max_pwr, tree->max_pwr);
+    max_id = (Compare(info1, info2) == BIGGER ? max_id : tree->max_id);
 }
 
 avl_rank::Node* avl_rank::merge(avl_rank::Node* node1, int size1, avl_rank::Node* node2, int size2)
 {
-    if((!node1 && !node2) || (!node1->height && !node2->height)) return NULL;
+    if(!size1 && !size2) return NULL;
     if(!size1) return node2;
     if(!size2) return node1;
     Node::Info* array1 = new Node::Info[size1];
@@ -324,6 +326,12 @@ avl_rank::Node* avl_rank::merge(avl_rank::Node* node1, int size1, avl_rank::Node
     Node::Info* result = new Node::Info[size1+size2];
     merge_sort(array1, array2, result, size1, size2);
     Node* tree = make_tree(result, 0, size1+size2-1);
+    if(node1)
+    {
+        node1->destroy();
+        delete node1;
+        node1 = NULL;
+    }
     delete[] array1;
     delete[] array2;
     delete[] result;
@@ -347,7 +355,7 @@ int avl_rank::lowestCommonAncestor(avl_rank::Node* node, avl_rank::Node* last)
 	{
 		if(!(Compare(path1[i]->info, path2[i]->info)==EQUALS))
 		{ 	//first different node in both paths
-			lcaNode = path1[i-1]->info.rank;		//the preior node is the Lca node
+			lcaNode = path1[i-1]->info.rank;		//the prior node is the Lca node
 			break;
 		}
 	}
@@ -367,19 +375,31 @@ int avl_rank::lowestCommonAncestor(avl_rank::Node* node, avl_rank::Node* last)
 
 
 //writing the search path of a given node to the nodesArray
-void avl_rank::getPath(avl_rank::Node *node, avl_rank::Node **nodesArray)
+void avl_rank::getPath(avl_rank::Node* current, avl_rank::Node *node, avl_rank::Node **nodesArray, int* counter)
 {
-	avl_rank::Node *currentNode=root;
-	int counter=0;
-	while(!(Compare(currentNode->info, node->info) == EQUALS))
+//	avl_rank::Node *currentNode=root;
+//	int counter=0;
+//	while(!(Compare(currentNode->info, node->info) == EQUALS))
+//    {
+//		nodesArray[counter++]=new avl_rank::Node(currentNode->info);
+//		if(((currentNode->left == NULL) && (currentNode->right != NULL)) || Compare(currentNode->left->info, node->info) == SMALLER )
+//			currentNode=currentNode->right;
+//		else
+//			currentNode=currentNode->left;
+//	}
+//	nodesArray[counter++]=new avl_rank::Node(currentNode->info);
+	nodesArray[(*counter)++]=new avl_rank::Node(current->info);
+    switch(Compare(current->info, node->info))
     {
-		nodesArray[counter++]=new avl_rank::Node(currentNode->info);
-		if(((currentNode->left == NULL) && (currentNode->right != NULL)) || Compare(currentNode->left->info, node->info) == SMALLER )
-			currentNode=currentNode->right;
-		else
-			currentNode=currentNode->left;
-	}
-	nodesArray[counter++]=new avl_rank::Node(currentNode->info);
+    case SMALLER :
+        getPath(current->right, node, nodesArray, counter);
+        break;
+    case BIGGER :
+        getPath(current->left, node, nodesArray, counter);
+        break;
+    case EQUALS :
+        return;
+    }
 }
 
 void avl_rank::print()

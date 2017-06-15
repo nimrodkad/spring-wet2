@@ -1,6 +1,6 @@
 #include "UnionFind.h"
 
-UnionFind::UnionFind(int N) : uf_size(N)
+UnionFind::UnionFind(int N) : uf_size(N+1)
 {
     if(N <= 0) throw fail();
     this->sets = new int[N+1];

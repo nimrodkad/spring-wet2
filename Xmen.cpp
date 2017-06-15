@@ -10,10 +10,11 @@ Student* Validate_Student(HashTable<Student>* ht, int studentID, Condition cond)
 int sumOfPower(avl_rank *tree,int num);
 
 
-Xmen::Xmen(int numberOfTeams){
+Xmen::Xmen(int numberOfTeams)
+{
 	teams = new UnionFind(numberOfTeams);
 	ht_students = new HashTable<Student>;
-	avl_students= new avl_rank*[numberOfTeams];
+	avl_students= new avl_rank*[numberOfTeams + 1];
 	for(int i=0; i<numberOfTeams + 1; i++){
 		avl_students[i] = new avl_rank();
 	}
@@ -54,15 +55,16 @@ void Xmen::JoinTeams(int Team1, int Team2) //should we also update the team vari
     if(x==y) return;
     //check x and y sizes before union for merging
     if(teams->size(x) < teams->size(y)){
-    	*avl_students[y] += *avl_students[x];
+    	*avl_students[y] += avl_students[x];
     }else{
-    	*avl_students[x] += *avl_students[y];
+    	*avl_students[x] += avl_students[y];
     }
     teams->Union(x, y);
 }
 
 void Xmen::TeamFight(int Team1, int Team2, int NumOfFighters)
 {
+    if(NumOfFighters <= 0) throw invalid();
     int x = teams->Find(Team1);
     int y = teams->Find(Team2);
     if( x == y ) return; //same teams
