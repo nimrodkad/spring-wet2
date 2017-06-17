@@ -76,9 +76,16 @@ void Xmen::TeamFight(int Team1, int Team2, int NumOfFighters)
     else if(sum1 < sum2){
     	teams->update_wins(y);
     }
+    std::cout<<"Team "<<Team1<<" has "<<sum1<<" and team "<<Team2<<" has "<<sum2 <<std::endl;
 }
 
-void Xmen::GetNumOfWins(int Team,int *Wins){
+void Xmen::GetNumOfWins(int Team,int *Wins)
+{
+    if(Team == 13)
+    {
+        avl_students[teams->Find(Team)]->print();
+        std::cout<<std::endl;
+    }
 	*Wins=teams->get_wins(Team);
 }
 

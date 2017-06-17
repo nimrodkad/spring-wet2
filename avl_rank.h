@@ -65,7 +65,7 @@ public:
             height(1), info(i, p, r), left(NULL), right(NULL){}
 
         Node(Info info) :
-            height(1), info(info.id, info.pwr, info.rank), left(NULL), right(NULL){}
+            height(1), info(info), left(NULL), right(NULL){}
 
         ~Node() {}
 
@@ -152,7 +152,7 @@ private:
 
     avl_rank::Node* merge(avl_rank::Node* node1, int size1, avl_rank::Node* node2, int size2);
 
-    void getPath(avl_rank::Node *current,avl_rank::Node *node, avl_rank::Node **nodesArray,int counter);
+    void getPath(avl_rank::Node *current,avl_rank::Node *node, avl_rank::Node **nodesArray,int* counter);
 
     void print(avl_rank::Node* node);
 };

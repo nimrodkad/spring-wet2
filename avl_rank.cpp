@@ -349,9 +349,10 @@ int avl_rank::lowestCommonAncestor(avl_rank::Node* node, avl_rank::Node* last)
 		path1[i]=NULL;
 		path2[i]=NULL;
 	}
-	getPath(root,node,path1,0);
-	getPath(root,last,path2,0);
-	for(int i=0;i<pathSize;i++)
+	int count1=0, count2=0;
+	getPath(root,node,path1,&count1);
+	getPath(root,last,path2,&count2);
+	for(int i=0;i<min(count1, count2);i++)
 	{
 		if(!(Compare(path1[i]->info, path2[i]->info)==EQUALS))
 		{ 	//first different node in both paths
@@ -361,7 +362,7 @@ int avl_rank::lowestCommonAncestor(avl_rank::Node* node, avl_rank::Node* last)
 	}
 	if(lcaNode == Avl_Defines::INVALID_RANK)
 	{		//lca node is the last node
-		lcaNode=path1[pathSize-1]->info.rank;
+		lcaNode=path1[count1-1]->info.rank;
 	}
 	for(int i=0;i<pathSize;i++)
     {
@@ -375,7 +376,7 @@ int avl_rank::lowestCommonAncestor(avl_rank::Node* node, avl_rank::Node* last)
 
 
 //writing the search path of a given node to the nodesArray
-void avl_rank::getPath(avl_rank::Node* current, avl_rank::Node *node, avl_rank::Node **nodesArray, int counter)
+void avl_rank::getPath(avl_rank::Node* current, avl_rank::Node *node, avl_rank::Node **nodesArray, int* counter)
 {
 //	avl_rank::Node *currentNode=root;
 //	int counter=0;
@@ -388,7 +389,8 @@ void avl_rank::getPath(avl_rank::Node* current, avl_rank::Node *node, avl_rank::
 //			currentNode=currentNode->left;
 //	}
 //	nodesArray[counter++]=new avl_rank::Node(currentNode->info);
-	nodesArray[counter++]=new avl_rank::Node(current->info);
+    if(!current) return;
+	nodesArray[(*counter)++]=new avl_rank::Node(current->info);
     switch(Compare(current->info, node->info))
     {
     case SMALLER :
