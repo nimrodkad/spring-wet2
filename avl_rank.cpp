@@ -301,6 +301,7 @@ avl_rank::Node* avl_rank::make_tree(avl_rank::Node::Info array[], int start, int
 
 void avl_rank::operator+=(avl_rank* tree)
 {
+    if((!size && !tree->size) || !tree->size) return;
     root = merge(root, size, tree->root, tree->size);
     if(!root) return;
     setRanks(root);
@@ -315,8 +316,15 @@ void avl_rank::operator+=(avl_rank* tree)
 avl_rank::Node* avl_rank::merge(avl_rank::Node* node1, int size1, avl_rank::Node* node2, int size2)
 {
     if(!size1 && !size2) return NULL;
-    if(!size1) return node2;
-    if(!size2) return node1;
+    if(!size1)
+    {
+        Node::Info* array3 = new Node::Info[size2];
+        int i=0;
+        addToArray(node2, array3, &i);
+        Node* tree1 = make_tree(array3, 0, size2-1);
+        delete[] array3;
+        return tree1;
+    }
     Node::Info* array1 = new Node::Info[size1];
     Node::Info* array2 = new Node::Info[size2];
     int i=0;
@@ -332,10 +340,6 @@ avl_rank::Node* avl_rank::merge(avl_rank::Node* node1, int size1, avl_rank::Node
         delete node1;
         node1 = NULL;
     }
-//    for(int i=0; i<size1; i++)
-//        delete array1[i];
-//    for(int i=0; i<size2; i++)
-//        delete array2[i];
     delete[] array1;
     delete[] array2;
     delete[] result;
