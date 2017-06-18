@@ -67,6 +67,9 @@ public:
         Node(Info info) :
             height(1), info(info), left(NULL), right(NULL){}
 
+        Node(Info info, Node* left, Node* right) :
+            height(1), info(info), left(left), right(right){}
+
         ~Node() {}
 
         void destroy()
@@ -146,7 +149,7 @@ private:
 
     void setSizes(avl_rank::Node *node);
 
-    void addToArray(avl_rank::Node* node, avl_rank::Node::Info array[], int* i);
+    void addToArray(avl_rank::Node* node, avl_rank::Node::Info* array[], int* i);
 
     avl_rank::Node* make_tree(avl_rank::Node::Info array[], int start, int end);
 

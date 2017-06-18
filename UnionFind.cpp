@@ -33,7 +33,7 @@ int UnionFind::size(int id)
 
 bool UnionFind::isInSet(int id)
 {
-    return (!(id <= 0 || id > size()));
+    return (!(id <= 0 || id >= size()));
 }
 
 int UnionFind::Find(int id)
