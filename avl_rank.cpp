@@ -251,11 +251,11 @@ void avl_rank::setSizes(avl_rank::Node *node)
     node->info.tree_size = 1 + (node->left ? node->left->info.tree_size : 0) + (node->right ? node->right->info.tree_size : 0);
 }
 
-void avl_rank::addToArray(avl_rank::Node* node, Node::Info* array[], int* i)
+void avl_rank::addToArray(avl_rank::Node* node, Node::Info array[], int* i)
 {
     if(!node) return;
     addToArray(node->left, array, i);
-    array[*i] = new Node::Info(node->info);
+    array[*i] = node->info;
     (*i)++;
     addToArray(node->right, array, i);
 }
@@ -317,14 +317,14 @@ avl_rank::Node* avl_rank::merge(avl_rank::Node* node1, int size1, avl_rank::Node
     if(!size1 && !size2) return NULL;
     if(!size1) return node2;
     if(!size2) return node1;
-    Node::Info** array1 = new Node::Info*[size1];
-    Node::Info** array2 = new Node::Info*[size2];
+    Node::Info* array1 = new Node::Info[size1];
+    Node::Info* array2 = new Node::Info[size2];
     int i=0;
     addToArray(node1, array1, &i);
     i=0;
     addToArray(node2, array2, &i);
     Node::Info* result = new Node::Info[size1+size2];
-    merge_sort(*array1, *array2, result, size1, size2);
+    merge_sort(array1, array2, result, size1, size2);
     Node* tree = make_tree(result, 0, size1+size2-1);
     if(node1)
     {
